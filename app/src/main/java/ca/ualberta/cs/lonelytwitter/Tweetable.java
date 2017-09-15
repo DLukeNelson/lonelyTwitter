@@ -8,4 +8,7 @@ import java.util.Date;
 public interface Tweetable {
     public String getText();
     public Date getDate();
+
+    public void addMood(Mood mood);
+    public String getMoodsString();
 }
