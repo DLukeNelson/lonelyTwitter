@@ -1,3 +1,15 @@
+/*
+ * LonelyTwitterActivity
+ *
+ * Version 1.0
+ *
+ * September 27, 2017
+ *
+ * Copyright (c) 2017. dlnelson, University of Alberta - All Rights Reserved.
+ * You may use, distribute, or modify this code under terms and conditions of the Code of Student Behavior at University of Alberta.
+ * You can find a copy of the license in this project. Otherwise please contact dlnelson@ualberta.ca.
+ */
+
 package ca.ualberta.cs.lonelytwitter;
 
 import java.io.BufferedReader;
@@ -24,16 +36,25 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Represents the Lonely Twitter Activity
+ *
+ * @author dlnelson
+ * @version 1.5
+ */
 public class LonelyTwitterActivity extends Activity {
-
 	private static final String FILENAME = "file.sav";
+
 	private EditText bodyText;
 	private ListView oldTweetsList;
-
 	private List<Tweet> tweets = new ArrayList<Tweet>();
 	private ArrayAdapter<Tweet> adapter;
 
-	/** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState Sent by android stack.
+     */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -73,6 +94,9 @@ public class LonelyTwitterActivity extends Activity {
 
 	}
 
+    /**
+     * Called after onCreate or after onStart.
+     */
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -83,6 +107,9 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+    /**
+     * Loads a saved list of tweets from the file.
+     */
 	private void loadFromFile() {
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
@@ -96,7 +123,10 @@ public class LonelyTwitterActivity extends Activity {
             tweets = new ArrayList<Tweet>();
 		}
 	}
-	
+
+    /**
+     * Saves the current list of tweets to the file.
+     */
 	private void saveInFile() {
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,
