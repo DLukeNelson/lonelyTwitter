@@ -26,6 +26,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
 public class LonelyTwitterActivity extends Activity {
 
 	private static final String FILENAME = "file.sav";
@@ -64,10 +66,32 @@ public class LonelyTwitterActivity extends Activity {
 		clearButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				setResult(RESULT_OK);
-				tweetList.clear();
-				deleteFile(FILENAME);  // TODO deprecate this button
-				adapter.notifyDataSetChanged();
+                ElasticsearchTweetController.GetTweetsTask getTweetsTask
+                        = new ElasticsearchTweetController.GetTweetsTask();
+                JSONObject json1 = new JSONObject();
+                JSONObject json2 = new JSONObject();
+                JSONObject json3 = new JSONObject();
+                Log.d("Hi", "HERE I AM!");
+                try {
+                    json1.put("message", "does"); //bodyText.getText().toString());
+                    json2.put("term", json1);
+                    json3.put("query", json2).put("size", "5");
+                }
+                catch (Exception e) {
+                    Log.i("Error", "Unable to convert input to JSON.");
+                }
+                Log.d("Hi", "THIS IS ME!");
+                try {
+                    getTweetsTask.execute(json3.toString());
+                    ArrayList<NormalTweet> temp = getTweetsTask.get();
+                    tweetList.clear();
+                    tweetList.addAll(temp);
+                    Log.d("Hi", tweetList.toString());
+                    adapter.notifyDataSetChanged();
+                }
+                catch (Exception e) {
+                    Log.i("Error", "Failed to get the tweets from the async object.");
+                }
 			}
 		});
 
